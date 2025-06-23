@@ -30,10 +30,8 @@ public class PlayerService {
         return player.map(p -> convertToDto(p, isAdmin));
     }
 
-    public Player getPlayerById(int id) {return playerRepository.findById(id).get();}
-
     public Integer getAge(Player player) {
-        if (player.getBirthYear() == null) {
+        if (player.getBirthYear() == null || player.getBirthYear().isEmpty()) {
             return null;
         }
         int birthYear = Integer.parseInt(player.getBirthYear());
@@ -44,7 +42,7 @@ public class PlayerService {
 
         LocalDate birthDate = LocalDate.of(birthYear, birthMonth, birthDay);
         LocalDate deathDate;
-        if (player.getDeathYear() != null) {
+        if (player.getDeathYear() != null && !player.getDeathYear().isEmpty()) {
             int deathYear = Integer.parseInt(player.getDeathYear());
             int deathMonth = player.getDeathMonth() != null && !player.getDeathMonth().isEmpty()
                     ? Integer.parseInt(player.getDeathMonth()) : 1;
